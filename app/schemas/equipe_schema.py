@@ -1,9 +1,8 @@
 from pydantic import BaseModel
 
-from app.schemas.info_tabela_schema import InfoTabelaSchema
-
 
 class EquipeSchema(BaseModel):
+    id: int
     nome: str
     estadio: str
     apelido: str
@@ -11,4 +10,4 @@ class EquipeSchema(BaseModel):
     info_tabela_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True

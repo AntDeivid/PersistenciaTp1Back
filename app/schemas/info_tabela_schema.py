@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 
 class InfoTabelaSchema(BaseModel):
+    id: int
     pontos: int
     jogos: int
     vitorias: int
@@ -9,4 +10,4 @@ class InfoTabelaSchema(BaseModel):
     derrotas: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
