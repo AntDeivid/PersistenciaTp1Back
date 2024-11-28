@@ -65,3 +65,6 @@ class EquipeService:
         if equipe:
             self.equipe_repository.delete(id)
             self.info_tabela_repository.delete(equipe.info_tabela_id)
+
+    def count_lines(self) -> int:
+        return self.equipe_repository.count_lines()

@@ -33,3 +33,7 @@ def update(id: int, equipe: EquipeUpdateSchema) -> EquipeSchema:
 @router.delete("/{id}", status_code=204)
 def delete(id: int) -> None:
     equipe_service.delete(id)
+
+@router.get("/count-entities", response_model=int, status_code=200)
+def count_entities() -> int:
+    return equipe_service.count_lines()
