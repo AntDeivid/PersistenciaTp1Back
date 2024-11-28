@@ -20,6 +20,11 @@ def get_all() -> list[EquipeSchema]:
     return equipe_service.get_all()
 
 
+@router.get("/count-entities", response_model=int, status_code=200)
+def count_entities() -> int:
+    return equipe_service.count_lines()
+
+
 @router.get("/{id}", response_model=EquipeSchema, status_code=200)
 def get_by_id(id: int) -> EquipeSchema:
     return equipe_service.get_by_id(id)
@@ -29,11 +34,6 @@ def get_by_id(id: int) -> EquipeSchema:
 def update(id: int, equipe: EquipeUpdateSchema) -> EquipeSchema:
     return equipe_service.update(id, equipe)
 
-
 @router.delete("/{id}", status_code=204)
 def delete(id: int) -> None:
     equipe_service.delete(id)
-
-@router.get("/count-entities", response_model=int, status_code=200)
-def count_entities() -> int:
-    return equipe_service.count_lines()
