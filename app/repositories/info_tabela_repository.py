@@ -38,14 +38,21 @@ class InfoTabelaRepository:
     def update(self, info_tabela: InfoTabela) -> InfoTabela:
         df = pd.read_csv(self.FILE_PATH)
         info_tabela_dict = info_tabela.model_dump()
-        df.loc[df['id'] == info_tabela.id] = info_tabela_dict
+        
+        if not df[df['id'] == info_tabela.id].empty:
+            for key, value in info_tabela_dict.items():
+                df.loc[df['id'] == info_tabela.id, key] = value
+        else:
+            raise ValueError(f"ID {info_tabela.id} não encontrado.")
+        
         df.to_csv(self.FILE_PATH, index=False)
-
         return info_tabela
 
     def delete(self, id: int) -> None:
         df = pd.read_csv(self.FILE_PATH)
         df = df.loc[df['id'] != id]
+        df = df.dropna(subset=['id'])  
+        df = df[df['id'].notnull()]  
         df.to_csv(self.FILE_PATH, index=False)
 
     def get_next_id(self) -> int:

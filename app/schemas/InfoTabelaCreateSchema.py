@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 
-class InfoTabelaSchema(BaseModel):
-    id: int
+class InfoTabelaCreateSchema(BaseModel):
     pontos: int
     jogos: int
     vitorias: int
