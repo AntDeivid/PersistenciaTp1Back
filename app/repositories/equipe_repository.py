@@ -35,12 +35,11 @@ class EquipeRepository:
             return Equipe(**equipe[0])
         return None
 
-    def update(self, equipe: Equipe) -> Equipe:
+    def update(self, equipe_id: int, equipe: Equipe) -> Equipe:
         df = pd.read_csv(self.FILE_PATH)
-        equipe_dict = equipe.model_dump()
-        df.loc[df['id'] == equipe.id] = equipe_dict
+        index_to_update = df.loc[df['id'] == equipe_id].index[0]
+        df.loc[index_to_update] = equipe.model_dump()
         df.to_csv(self.FILE_PATH, index=False)
-
         return equipe
 
     def delete(self, id: int) -> None:

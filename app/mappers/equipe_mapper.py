@@ -1,6 +1,7 @@
 from app.models.equipe import Equipe
 from app.schemas.EquipeCreateSchema import EquipeCreateSchema
 from app.schemas.equipe_schema import EquipeSchema
+from app.schemas.equipe_update_schema import EquipeUpdateSchema
 
 
 class EquipeMapper:
@@ -13,16 +14,17 @@ class EquipeMapper:
             estadio=equipe.estadio,
             apelido=equipe.apelido,
             jogadores_registrados=equipe.jogadores_registrados,
-            info_tabela_id=equipe.info_tabela_id,
         )
 
     @staticmethod
-    def to_entity(equipe_schema: EquipeSchema) -> Equipe:
+    def to_entity(equipe_schema: EquipeUpdateSchema, equipe_id: int, info_tabela_id: int) -> Equipe:
         equipe = Equipe(
+            id=equipe_id,
             nome=equipe_schema.nome,
             estadio=equipe_schema.estadio,
             apelido=equipe_schema.apelido,
             jogadores_registrados=equipe_schema.jogadores_registrados,
+            info_tabela_id=info_tabela_id,
         )
 
         return equipe
