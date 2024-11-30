@@ -1,2 +1,14 @@
 id,nome,estadio,apelido,jogadores_registrados,info_tabela_id
 1,São Paulo,Morumbis,Pombeirão,24,6
+2,Botafogo,Estádio Nilton Santos,Glorioso,0,7
+3,Palmeiras,Allianz Parque,Verdão,0,8
+4,Flamengo,Maracanã,Mengão,0,9
+5,Grêmio,Arena do Grêmio,Tricolor,0,10
+6,Athletico-PR,Arena da Baixada,Furacão,0,11
+7,Atlético-MG,Mineirão,Galo,0,12
+8,Fluminense,Maracanã,Tricolor,0,13
+9,Fortaleza,Arena Castelão,Leão,0,14
+10,Cruzeiro,Mineirão,Raposa,0,15
+11,Cuiabá,Arena Pantanal,Dourado,0,16
+12,São Paulo,Morumbi,Tricolor Paulista,0,17
+13,Corinthians,Neo Química Arena,Timão,0,18
