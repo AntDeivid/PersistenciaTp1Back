@@ -35,6 +35,11 @@ class EquipeRepository:
             return Equipe(**equipe[0])
         return None
 
+    def get_with_search(self, search: str) -> list[Equipe]:
+        df = pd.read_csv(self.FILE_PATH)
+        filtered_equipes = df[(df['nome'].str.contains(search, case=False)) | (df['apelido'].str.contains(search, case=False))]
+        return [Equipe(**equipe) for equipe in filtered_equipes.to_dict(orient='records')]
+
     def update(self, equipe_id: int, equipe: Equipe) -> Equipe:
         df = pd.read_csv(self.FILE_PATH)
         index_to_update = df.loc[df['id'] == equipe_id].index[0]

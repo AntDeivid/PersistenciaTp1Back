@@ -53,6 +53,17 @@ class EquipeService:
             return schema
         return None
 
+    def get_with_search(self, search: str) -> list[EquipeSchema]:
+        entities = self.equipe_repository.get_with_search(search)
+        schemas = []
+        for entity in entities:
+            schema = EquipeMapper.to_schema(entity)
+            info_tabela = self.info_tabela_repository.get_by_id(entity.info_tabela_id)
+            schema.info_tabela = InfoTabelaMapper.to_schema(info_tabela)
+            schemas.append(schema)
+
+        return schemas
+
     def update(self, equipe_id: int, equipe: EquipeUpdateSchema) -> EquipeSchema:
         equipe_entity = self.equipe_repository.get_by_id(equipe_id)
         if equipe_entity:

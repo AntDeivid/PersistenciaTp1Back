@@ -31,6 +31,9 @@ def count_entities() -> int:
 def export() -> StreamingResponse:
     return equipe_service.get_zip_file()
 
+@router.get("/search", response_model=list[EquipeSchema], status_code=200)
+def get_with_search(search: str) -> list[EquipeSchema]:
+    return equipe_service.get_with_search(search)
 
 @router.get("/{id}", response_model=EquipeSchema, status_code=200)
 def get_by_id(id: int) -> EquipeSchema:
