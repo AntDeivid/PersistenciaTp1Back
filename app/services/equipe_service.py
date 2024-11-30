@@ -1,3 +1,4 @@
+import hashlib
 from io import BytesIO
 from zipfile import ZipFile
 
@@ -63,6 +64,12 @@ class EquipeService:
             schemas.append(schema)
 
         return schemas
+
+    def get_file_hash(self) -> str:
+        file_path = self.equipe_repository.get_file_path()
+        with open(file_path, 'rb') as file:
+            file_hash = hashlib.sha256(file.read()).hexdigest()
+        return file_hash
 
     def update(self, equipe_id: int, equipe: EquipeUpdateSchema) -> EquipeSchema:
         equipe_entity = self.equipe_repository.get_by_id(equipe_id)

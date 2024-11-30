@@ -27,13 +27,21 @@ def get_all() -> list[EquipeSchema]:
 def count_entities() -> int:
     return equipe_service.count_lines()
 
+
 @router.get("/export", status_code=200)
 def export() -> StreamingResponse:
     return equipe_service.get_zip_file()
 
+
 @router.get("/search", response_model=list[EquipeSchema], status_code=200)
 def get_with_search(search: str) -> list[EquipeSchema]:
     return equipe_service.get_with_search(search)
+
+
+@router.get(("/file-hash"), response_model=dict[str, str], status_code=200)
+def get_file_hash() -> dict[str, str]:
+    return {"hash": equipe_service.get_file_hash()}
+
 
 @router.get("/{id}", response_model=EquipeSchema, status_code=200)
 def get_by_id(id: int) -> EquipeSchema:
@@ -43,6 +51,7 @@ def get_by_id(id: int) -> EquipeSchema:
 @router.put("/{id}", response_model=EquipeSchema, status_code=200)
 def update(id: int, equipe: EquipeUpdateSchema) -> EquipeSchema:
     return equipe_service.update(id, equipe)
+
 
 @router.delete("/{id}", status_code=204)
 def delete(id: int) -> None:
