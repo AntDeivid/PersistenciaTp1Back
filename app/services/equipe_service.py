@@ -1,3 +1,8 @@
+from io import BytesIO
+from zipfile import ZipFile
+
+from starlette.responses import StreamingResponse
+
 from app.mappers.equipe_mapper import EquipeMapper
 from app.mappers.info_tabela_mapper import InfoTabelaMapper
 from app.repositories.equipe_repository import EquipeRepository
@@ -68,3 +73,17 @@ class EquipeService:
 
     def count_lines(self) -> int:
         return self.equipe_repository.count_lines()
+
+    def get_zip_file(self) -> StreamingResponse:
+        equipe_file_path = self.equipe_repository.get_file_path()
+        info_tabela_file_path = self.info_tabela_repository.get_file_path()
+        buffer = BytesIO()
+
+        with ZipFile(buffer, 'w') as zip_file:
+            zip_file.write(equipe_file_path, equipe_file_path)
+            zip_file.write(info_tabela_file_path, info_tabela_file_path)
+        buffer.seek(0)
+
+        return StreamingResponse(content=iter([buffer.getvalue()]),
+                                 media_type='application/x-zip-compressed',
+                                 headers={'Content-Disposition': 'attachment; filename=equipes.zip'})

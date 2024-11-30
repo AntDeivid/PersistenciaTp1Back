@@ -60,3 +60,6 @@ class InfoTabelaRepository:
         if df.empty:
             return 1
         return df['id'].max() + 1
+
+    def get_file_path(self) -> str:
+        return self.FILE_PATH

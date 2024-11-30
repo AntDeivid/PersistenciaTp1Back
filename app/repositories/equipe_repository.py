@@ -56,3 +56,6 @@ class EquipeRepository:
     def count_lines(self) -> int:
         df = pd.read_csv(self.FILE_PATH)
         return df.shape[0] - 1
+
+    def get_file_path(self) -> str:
+        return self.FILE_PATH

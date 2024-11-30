@@ -1,4 +1,7 @@
+from io import BytesIO
+
 from fastapi import APIRouter
+from starlette.responses import StreamingResponse
 
 from app.schemas.EquipeCreateSchema import EquipeCreateSchema
 from app.schemas.equipe_schema import EquipeSchema
@@ -23,6 +26,10 @@ def get_all() -> list[EquipeSchema]:
 @router.get("/count-entities", response_model=int, status_code=200)
 def count_entities() -> int:
     return equipe_service.count_lines()
+
+@router.get("/export", status_code=200)
+def export() -> StreamingResponse:
+    return equipe_service.get_zip_file()
 
 
 @router.get("/{id}", response_model=EquipeSchema, status_code=200)
