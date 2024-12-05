@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from app.schemas.info_tabela_schema import InfoTabelaSchema
+from app.schemas.InfoTabelaCreateSchema import InfoTabelaCreateSchema
 
 
 class EquipeCreateSchema(BaseModel):
@@ -8,7 +8,7 @@ class EquipeCreateSchema(BaseModel):
     estadio: str
     apelido: str
     jogadores_registrados: int
-    info_tabela: InfoTabelaSchema
+    info_tabela: InfoTabelaCreateSchema
 
     class Config:
         from_attributes = True

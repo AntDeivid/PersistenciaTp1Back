@@ -24,7 +24,7 @@ class EquipeService:
         info_tabela_id = self.info_tabela_repository.get_next_id()
 
         new_equipe = EquipeMapper.create_to_entity(equipe, equipe_id, info_tabela_id)
-        new_info_tabela = InfoTabelaMapper.to_entity(equipe.info_tabela, info_tabela_id)
+        new_info_tabela = InfoTabelaMapper.create_to_entity(equipe.info_tabela, info_tabela_id)
 
         saved_info_tabela = self.info_tabela_repository.save(new_info_tabela)
         saved_equipe = self.equipe_repository.save(new_equipe)
