@@ -1,5 +1,3 @@
-from io import BytesIO
-
 from fastapi import APIRouter
 from starlette.responses import StreamingResponse
 
@@ -38,7 +36,7 @@ def get_with_search(search: str) -> list[EquipeSchema]:
     return equipe_service.get_with_search(search)
 
 
-@router.get(("/file-hash"), response_model=dict[str, str], status_code=200)
+@router.get("/file-hash", response_model=dict[str, str], status_code=200)
 def get_file_hash() -> dict[str, str]:
     return {"hash": equipe_service.get_file_hash()}
 
