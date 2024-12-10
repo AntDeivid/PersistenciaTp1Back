@@ -1,9 +1,11 @@
 import hashlib
 from io import BytesIO
+from typing import Optional
 from zipfile import ZipFile
 
 from starlette.responses import StreamingResponse
 
+from app.FilterType import FilterType
 from app.mappers.equipe_mapper import EquipeMapper
 from app.mappers.info_tabela_mapper import InfoTabelaMapper
 from app.repositories.equipe_repository import EquipeRepository
@@ -34,7 +36,7 @@ class EquipeService:
 
         return schema
 
-    def get_all(self) -> list[EquipeSchema]:
+    def get_all(self, filter_equipe: Optional[FilterType] = None) -> list[EquipeSchema]:
         entities = self.equipe_repository.get_all()
         schemas = []
         for entity in entities:
@@ -42,6 +44,16 @@ class EquipeService:
             info_tabela = self.info_tabela_repository.get_by_id(entity.info_tabela_id)
             schema.info_tabela = InfoTabelaMapper.to_schema(info_tabela)
             schemas.append(schema)
+
+        if filter_equipe is not None:
+            schemas = sorted(schemas, key = lambda x: x.info_tabela.pontos, reverse = True)
+
+            if filter_equipe == FilterType.G4:
+                schemas = schemas[:4]
+            elif filter_equipe == FilterType.Z4:
+                schemas = schemas[-4:]
+            elif filter_equipe == FilterType.PERMANECE:
+                schemas = schemas[4:-4]
 
         return schemas
 

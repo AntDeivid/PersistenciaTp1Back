@@ -1,6 +1,9 @@
+from typing import Optional
+
 from fastapi import APIRouter
 from starlette.responses import StreamingResponse
 
+from app.FilterType import FilterType
 from app.schemas.EquipeCreateSchema import EquipeCreateSchema
 from app.schemas.equipe_schema import EquipeSchema
 from app.schemas.equipe_update_schema import EquipeUpdateSchema
@@ -17,8 +20,8 @@ def save(equipe: EquipeCreateSchema) -> EquipeSchema:
 
 
 @router.get("/", response_model=list[EquipeSchema], status_code=200)
-def get_all() -> list[EquipeSchema]:
-    return equipe_service.get_all()
+def get_all(filter_equipe: Optional[FilterType] = None) -> list[EquipeSchema]:
+    return equipe_service.get_all(filter_equipe)
 
 
 @router.get("/count-entities", response_model=int, status_code=200)
