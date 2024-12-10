@@ -20,7 +20,7 @@ def get_all() -> list[InfoTabelaSchema]:
 def get_by_id(id: int) -> InfoTabelaSchema:
     return info_tabela_service.get_by_id(id)
 
-@router.put("/info_tabela/{id}", response_model=InfoTabelaCreateSchema)
+@router.put("/{id}", response_model=InfoTabelaCreateSchema)
 def update(id: int, info_tabela: InfoTabelaCreateSchema):
     return info_tabela_service.update(id, info_tabela)
 
