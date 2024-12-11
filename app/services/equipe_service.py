@@ -1,4 +1,5 @@
 import hashlib
+import logging
 from io import BytesIO
 from typing import Optional
 from zipfile import ZipFile
@@ -18,6 +19,7 @@ from app.schemas.equipe_update_schema import EquipeUpdateSchema
 class EquipeService:
 
     def __init__(self):
+        self.logger = logging.getLogger("app.EquipeService")
         self.equipe_repository = EquipeRepository()
         self.info_tabela_repository = InfoTabelaRepository()
 
@@ -81,6 +83,8 @@ class EquipeService:
         file_path = self.equipe_repository.get_file_path()
         with open(file_path, 'rb') as file:
             file_hash = hashlib.sha256(file.read()).hexdigest()
+        self.logger.info(f"Hash do arquivo de equipes: {file_hash}")
+        self.logger.debug("O hash do arquivo de equipes foi gerado com sucesso")
         return file_hash
 
     def update(self, equipe_id: int, equipe: EquipeUpdateSchema) -> EquipeSchema:
@@ -113,6 +117,8 @@ class EquipeService:
             zip_file.write(equipe_file_path, equipe_file_path)
             zip_file.write(info_tabela_file_path, info_tabela_file_path)
         buffer.seek(0)
+
+        self.logger.info("Arquivos de equipes e informações de tabela exportados com sucesso")
 
         return StreamingResponse(content=iter([buffer.getvalue()]),
                                  media_type='application/x-zip-compressed',
